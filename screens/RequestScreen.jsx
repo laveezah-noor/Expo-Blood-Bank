@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import { Form, Item, Label, Button, List, ListItem, InputGroup, Input, Icon } from 'native-base';
 import {View, Text} from 'react-native'
+import {connect} from 'react-redux'
 
 class RequestScreen extends Component {
     render() {
@@ -111,4 +112,16 @@ const styles = StyleSheet.create({
   }
 });
 
-export default RequestScreen;
+const mapStateToProps = (state) => ({
+  ads: state.app.ads,
+  current_user: state.auth.current_user,
+  name: "GHOUS AHMED"
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  set_ad: (Category,SubCategory,Details,Images) => dispatch(set_ad(Category,SubCategory,Details,Images)),
+})
+
+export default connect(
+  mapStateToProps, mapDispatchToProps
+  )(RequestScreen);
