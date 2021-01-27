@@ -1,6 +1,9 @@
 const APP_DATA = {
     Donors:[],
-    Requests:[]
+    Requests:[],
+    MyRequests:[],
+    MyDonation:[],
+    Notifications:[]
 }
 export default (state = APP_DATA, action) => {
     console.log('action ==>',action)
