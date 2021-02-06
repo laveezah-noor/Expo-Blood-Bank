@@ -11,7 +11,10 @@ import HomeScreen from '../screens/HomeScreen';
 import DonorScreen from '../screens/DonorScreen';
 import RequestScreen from '../screens/RequestScreen';
 import ProfileScreen from '../screens/ProfileScreen'
+import EditProfileInfo from '../components/EditProfileInfo'
+import MainRequestScreen from '../screens/MainRequestScreen'
 // import { BottomTabParamList, TabOneParamList, TabTwoParamList, HomeParamList, DonorParamList, RequestParamList } from '../types';
+import {Button, Text} from 'native-base'
 
 const BottomTab = createBottomTabNavigator();
 
@@ -39,6 +42,13 @@ export default function BottomTabNavigator() {
       <BottomTab.Screen
         name="Request"
         component={RequestNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="user-alt" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="MainRequest"
+        component={MainRequestNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="user-alt" color={color} />,
         }}
@@ -133,16 +143,47 @@ function RequestNavigator() {
   );
 }
 
+const MainRequestStack = createStackNavigator();
+
+function MainRequestNavigator() {
+  return (
+    <MainRequestStack.Navigator>
+      <MainRequestStack.Screen
+        name="MainRequestScreen"
+        component={MainRequestScreen}
+        options={{ headerTitle: 'All Requests' }}
+      />
+    </MainRequestStack.Navigator>
+  );
+}
+
 const ProfileStack = createStackNavigator();
 
 function ProfileNavigator() {
   return (
-    <ProfileStack.Navigator>
+    <ProfileStack.Navigator mode="card">
       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
-      />
+        options={({ navigation, route }) => ({
+          title: 'Profile',
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerRight: () => (
+            <Button
+              onPress={() => navigation.navigate('EditProfile')}
+              info
+            ><Text>Edit</Text></Button>
+          ),
+          })} />
+          <ProfileStack.Screen
+           name="EditProfile" component={EditProfileInfo}/>
     </ProfileStack.Navigator>
   );
 }
+

@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import {Content, Card, CardItem, Input, Thumbnail, Button, Label} from 'native-base';
-import EditProfileInfo from '../components/EditProfileInfo'
+import {Content, Card, CardItem, Thumbnail, Button, Label} from 'native-base';
+import {connect} from 'react-redux'
 
-function Profile({ navigation, route }) {
+function ProfileScreen({ navigation, route, profile }) {
   React.useEffect(() => {
     if (route.params?.post) {
       // Post updated, do something with `route.params.post`
@@ -13,51 +11,61 @@ function Profile({ navigation, route }) {
     }
   }, [route.params?.post]);
 
+  const name = profile.name;
+  const dp = profile.dp;
+  const bloodGroup = profile.bloodGroup;
+  const gender = profile.gender;
+  const dob = profile.dob;
+  const no = profile.no;
+  const email = profile.email;
+  const height = profile.height;
+  const weight = profile.weight;
+  console.log(profile)
   return (
     <Content padder>
       <Card style={{flex: 0}}>
         <CardItem style={styles.container}>
           <View style={styles.profile}><Thumbnail square style={{resizeMode:"contain"}} source /></View>
-          <Text style={styles.profileName}>Name</Text>
+          <Text style={styles.profileName}>{name}</Text>
         </CardItem>
         <CardItem style={{paddingBottom:0}}>
           <View style={styles.item}>
             <Label style={styles.label}>Gender</Label>
-            <Text style={styles.labelText}>Male</Text>
+            <Text style={styles.labelText}>{gender}</Text>
           </View>
           <View style={styles.item}>
             <Label style={styles.label}>Blood Group</Label>
-            <Text style={styles.labelText}>A+</Text>
+            <Text style={styles.labelText}>{bloodGroup}</Text>
           </View>
         </CardItem>
         <CardItem style={{paddingTop:0, paddingBottom:0}}>
           <View style={styles.item}>
             <Label style={styles.label}>Date Of Birth</Label>
-            <Text style={styles.labelText}>01-01-2001</Text>
+            <Text style={styles.labelText}>{dob}</Text>
           </View>
         </CardItem>
         <CardItem style={{paddingTop:0, paddingBottom:0}}>
           <View style={styles.item}>
             <Label style={styles.label}>Email Address</Label>
-            <Text style={styles.labelText}>example@company.com</Text>
+            <Text style={styles.labelText}>{email}</Text>
           </View>
         </CardItem>
         <CardItem style={{paddingTop:0, paddingBottom:0}}>
           <View style={styles.item}>
             <Label style={styles.label}>Phone Number</Label>
-            <Text style={styles.labelText}>03333302154</Text>
+            <Text style={styles.labelText}>{no}</Text>
           </View>
         </CardItem>
         <CardItem style={{paddingTop:0, paddingBottom:0}}>
           <View style={styles.item}>
             <Label style={styles.label}>Height</Label>
-            <Text style={styles.labelText}>150 cm</Text>
+            <Text style={styles.labelText}>{height} cm</Text>
           </View>
         </CardItem>
         <CardItem style={{paddingTop:0, paddingBottom:0}}>
           <View style={styles.item}>
             <Label style={styles.label}>Weight</Label>
-            <Text style={styles.labelText}>50 kg</Text>
+            <Text style={styles.labelText}>{weight} kg</Text>
           </View>
         </CardItem>
       </Card>
@@ -65,36 +73,15 @@ function Profile({ navigation, route }) {
   );
 }
 
-
-
-const Stack = createStackNavigator();
-
-export default function ProfileScreen() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator mode="modal">
-        <Stack.Screen name="Profile" component={Profile} 
-        options={({ navigation, route }) => ({
-          title: 'Profile',
-          headerStyle: {
-            backgroundColor: '#f4511e',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerRight: () => (
-            <Button
-              onPress={() => navigation.navigate('EditProfile')}
-              info
-            >Edit</Button>
-          ),
-          })} />
-        <Stack.Screen name="EditProfile" component={EditProfileInfo} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+const mapStateToProps = (state) => {
+  return{
+  profile: state.auth.current_user,
+  }
 }
+
+export default connect(
+  mapStateToProps, null
+  )(ProfileScreen);
 
 
 const styles = StyleSheet.create({

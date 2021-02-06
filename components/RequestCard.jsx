@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { Card, CardItem, Text, } from 'native-base';
 
 export default function RequestCard(props) {
-  console.log("Card==> ",props.item)
   const item = props.item;
   const patientName = item.patientName; 
   const patientAge = item.patientAge; 
@@ -27,7 +26,7 @@ const Icon = (props) =>{
     
   return(
       <View style={styles.iconContainer}>
-          <Text style={[styles.iconSub, {letterSpacing: 2}]}>{props.status}</Text>
+          <Text style={[styles.iconSub, {letterSpacing: 1}]}>{props.status}</Text>
           <Text style={styles.iconHead}>{props.bloodGroup}</Text>
       </View>
   )
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     color: "#fff",
-    marginTop: 5
+    marginTop: 4
   },
   iconSub:{
     fontSize: 9,
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
     color: "#fff",
     paddingVertical: 3,
-    paddingHorizontal: 2,
+    paddingHorizontal: 3,
     borderRadius: 4,
   }
 });

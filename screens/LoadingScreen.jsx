@@ -7,18 +7,21 @@ class LoadingScreen extends Component {
         this.checkIfLoggedIn();
     }
     checkIfLoggedIn = () =>{
-        // firebase.auth().onAuthStateChanged(
-        //     function(user) {
-        //         if(user) {
-        //             this.props.navigation.navigate()
-        //         }
-        //     }
-        // )
+        firebase.auth().onAuthStateChanged(
+            function(user) {
+                if(user) {
+                    this.props.navigation.navigate('Home')
+                }
+                else{
+                    this.props.navigation.navigate('Login')
+                }
+            }.bind(this)
+        )
     }
     render() {
         return (
             <View>
-                <ActivityIndicator/>
+                <ActivityIndicator size="large" />
             </View>
         );
     }

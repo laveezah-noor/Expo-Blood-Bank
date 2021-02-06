@@ -4,32 +4,19 @@ import Constants from 'expo-constants';
 
 // You can import from local files
 import RequestCard from '../components/RequestCard';
+import {connect} from 'react-redux';
 
-const Data = [{
-      status: "urgent",
-      bloodGroup: "A+",
-      patientName: "Ronald Dixen",
-      patientAge: 24,
-      patientGender: "Male",
-},
-{
-      status: "urgent",
-      bloodGroup: "B+",
-      patientName: "Dixen Ronald",
-      patientAge: 42,
-      patientGender: "Male",
-},
-]
-export default function MainRequestScreen() {
+function MainRequestScreen({Requests}) {
+  console.log(Requests)
   return (
     <View style={styles.container}>
       <Text style={styles.paragraph}>
-        Change code in the editor and watch it change on your phone! Save to get a shareable url.
+        Here Are All Request.
+        Help the ones in Need
       </Text>
       <FlatList
-        data={Data}
+        data={Requests}
         renderItem={({ item }) => {
-          console.log("Item==> ",item)
           return <RequestCard item={item}/>
         }}
         keyExtractor={item => item.patientName}
@@ -53,3 +40,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+const mapStateToProps = (state) => {
+  return{
+  Requests: state.app.Requests,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+
+})
+
+export default connect(
+  mapStateToProps, mapDispatchToProps
+  )(MainRequestScreen);

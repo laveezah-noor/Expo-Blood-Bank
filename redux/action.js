@@ -1,9 +1,14 @@
-const Add_Donor = "";
+    const Add_Donor = "";
 const Add_Request = "";
 
+const set_Profile = (profile) => {
+    return (dispatch) => {
+        dispatch({type: "SETPROFILE", payload: profile})
+    }
+}
 
 import auth from '@react-native-firebase/auth';
-import { LoginManager, AccessToken } from 'react-native-fbsdk';
+// import { LoginManager, AccessToken } from 'react-native-fbsdk';
 
 async function onFacebookButtonPress() {
   // Attempt login with permissions
@@ -115,7 +120,11 @@ const google_login = () => {
 
 const email_sign = (email,password) =>{
     return(dispatch) =>{
-        firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((result)=>{
+            console.log(result)
+        })
+        .catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -126,7 +135,8 @@ const email_sign = (email,password) =>{
 
 const email_login = (email,password) =>{
     return(dispatch) =>{
-        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -166,10 +176,9 @@ const email_login = (email,password) =>{
 export{
     Add_Donor,
     Add_Request,
-    set_data,
     facebook_login,
     google_login,
     email_login,
     email_sign,
-    set_ad
+    set_Profile
 }
