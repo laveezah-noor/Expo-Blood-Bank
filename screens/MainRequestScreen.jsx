@@ -5,9 +5,13 @@ import Constants from 'expo-constants';
 // You can import from local files
 import RequestCard from '../components/RequestCard';
 import {connect} from 'react-redux';
+import {fetchRequests} from '../redux/action'
 
 function MainRequestScreen({Requests}) {
-  console.log(Requests)
+  React.useEffect(()=>{
+    fetchRequests() 
+  }) 
+  console.log("Requests==>",Requests)
   return (
     <View style={styles.container}>
       <Text style={styles.paragraph}>
@@ -48,7 +52,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-
+  fetchRequests: () => dispatch(fetchRequests())
 })
 
 export default connect(

@@ -1,4 +1,6 @@
-    const Add_Donor = "";
+import * as firebase from 'firebase'
+
+const Add_Donor = "";
 const Add_Request = "";
 
 const set_Profile = (profile) => {
@@ -7,8 +9,6 @@ const set_Profile = (profile) => {
     }
 }
 
-import auth from '@react-native-firebase/auth';
-// import { LoginManager, AccessToken } from 'react-native-fbsdk';
 
 async function onFacebookButtonPress() {
   // Attempt login with permissions
@@ -173,7 +173,68 @@ const email_login = (email,password) =>{
 //       });
 // }
 
+const addProfile = (name, phone, email, password, bGroup, donor) => {
+    return (dispatch) => {
+        let profile = {
+            Name: name,
+            Donor: donor,
+            Email: email,
+            Phone: phone,
+            BloodGroup: bGroup,
+            Passcode: password
+        }
+        key = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+        firebase.database().ref("/").child(`Users/${key}`).set(profile)
+        .then(()=>{
+        dispatch({type: "SETPROFILE", payload: [name,email,bGroup,phone,donor, password]})
+        console.log("Profile Complete")
+        },
+        
+        )
+    }
+}
+
+const setRequests = (requestData) => {
+    return {
+        type: "SETREQUESTS",
+        value: requestData
+    };
+}
+
+
+const sendRequest = (requestData) => {
+    return (dispatch) => {
+        key = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+        firebase.database().ref("/").child(`Requests/${key}`).set(requestData)
+        .then(()=>{
+        dispatch({type: "SENDREQUEST", payload: requestData})
+        console.log("Request Send");
+        alert('Request Complete')
+        })
+        .catch((error)=>{
+            alert(error)
+        })
+    }
+}        
+        
+    
+
+
+
+const fetchRequests = () => {
+    return function(dispatch) {
+        firebase.database().ref("/Requests").on("value", function(snapshot) {
+            var requestsData = snapshot.val();
+            dispatch(setRequests(requestsData));
+        }, function(error) { });
+    };
+}
+
 export{
+    fetchRequests,
+    setRequests,
+    sendRequest,
+    addProfile,
     Add_Donor,
     Add_Request,
     facebook_login,

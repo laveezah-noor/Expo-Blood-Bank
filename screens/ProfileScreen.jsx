@@ -1,26 +1,35 @@
 import * as React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import {Content, Card, CardItem, Thumbnail, Button, Label} from 'native-base';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import * as firebase from 'firebase';
 
-function ProfileScreen({ navigation, route, profile }) {
-  React.useEffect(() => {
-    if (route.params?.post) {
+function ProfileScreen(props) {
+  // React.useEffect(() => {
+    // if (route.params?.post) {
       // Post updated, do something with `route.params.post`
       // For example, send the post to the server
-    }
-  }, [route.params?.post]);
+    // }
+  // }, [route.params?.post]);
 
-  const name = profile.name;
-  const dp = profile.dp;
-  const bloodGroup = profile.bloodGroup;
-  const gender = profile.gender;
-  const dob = profile.dob;
-  const no = profile.no;
-  const email = profile.email;
-  const height = profile.height;
-  const weight = profile.weight;
-  console.log(profile)
+  const name = props.current_user.name;
+  const dp = props.current_user.dp;
+  const bloodGroup = props.current_user.bloodGroup;
+  const gender = props.current_user.gender;
+  const dob = props.current_user.dob;
+  const no = props.current_user.no;
+  const email = props.current_user.email;
+  const height = props.current_user.height;
+  const weight = props.current_user.weight;
+  console.log(props)
+
+  const logOut = () => {
+    firebase.auth().signOut().then(() => {
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
+  }
   return (
     <Content padder>
       <Card style={{flex: 0}}>
@@ -68,6 +77,7 @@ function ProfileScreen({ navigation, route, profile }) {
             <Text style={styles.labelText}>{weight} kg</Text>
           </View>
         </CardItem>
+        <Button onPress={()=>logOut()}><Text>Logout</Text></Button>
       </Card>
     </Content>
   );
@@ -75,7 +85,7 @@ function ProfileScreen({ navigation, route, profile }) {
 
 const mapStateToProps = (state) => {
   return{
-  profile: state.auth.current_user,
+    current_user: state.auth.current_user,
   }
 }
 

@@ -1,30 +1,34 @@
 import React, { Component } from 'react';
-import { ActivityIndicator } from 'react-native';
-import { View } from '../components/Themed';
+import { View } from 'react-native';
+import * as firebase from 'firebase'
+import { Spinner } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
 
-class LoadingScreen extends Component {
-    componentDidMount(){
-        this.checkIfLoggedIn();
-    }
-    checkIfLoggedIn = () =>{
+function LoadingScreen(props,{ isAuthenticationReady}) {
+    React.useEffect(() => {
+        checkIfLoggedIn();
+    }, [isAuthenticationReady])
+    const navigation = useNavigation(); 
+    const checkIfLoggedIn = () =>{
         firebase.auth().onAuthStateChanged(
             function(user) {
                 if(user) {
-                    this.props.navigation.navigate('Home')
+                    console.log("I'm Gooing")
+                    navigation.navigate('Root')
                 }
                 else{
-                    this.props.navigation.navigate('Login')
+                    console.log("Yara working")
+                    navigation.navigate('Login')
                 }
-            }.bind(this)
-        )
-    }
-    render() {
-        return (
-            <View>
-                <ActivityIndicator size="large" />
-            </View>
-        );
-    }
+            }
+        )}
+        console.log(props)
+    return (
+        <View style={{justifyContent: "center", marginTop: 300}}>
+            <Spinner color="red"/>
+        </View>
+    );
 }
+
 
 export default LoadingScreen;

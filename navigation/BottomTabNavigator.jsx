@@ -36,21 +36,21 @@ export default function BottomTabNavigator() {
         name="Donor"
         component={DonorNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
         }}
       />
       <BottomTab.Screen
         name="Request"
         component={RequestNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="user-alt" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
         }}
       />
       <BottomTab.Screen
         name="MainRequest"
         component={MainRequestNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="user-alt" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="notes-medical" color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -67,39 +67,39 @@ export default function BottomTabNavigator() {
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function TabBarIcon(props) {
-  return <FontAwesome5 size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome5 size={25} style={{ marginBottom: -3 }} {...props} />;
 }
 
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator();
+// const TabOneStack = createStackNavigator();
 
-function TabOneNavigator() {
-  return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
-      />
-    </TabOneStack.Navigator>
-  );
-}
+// function TabOneNavigator() {
+//   return (
+//     <TabOneStack.Navigator>
+//       <TabOneStack.Screen
+//         name="TabOneScreen"
+//         component={TabOneScreen}
+//         options={{ headerTitle: 'Tab One Title' }}
+//       />
+//     </TabOneStack.Navigator>
+//   );
+// }
 
-const TabTwoStack = createStackNavigator();
+// const TabTwoStack = createStackNavigator();
 
-function TabTwoNavigator() {
-  return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
-      />
-    </TabTwoStack.Navigator>
-  );
-}
+// function TabTwoNavigator() {
+//   return (
+//     <TabTwoStack.Navigator>
+//       <TabTwoStack.Screen
+//         name="TabTwoScreen"
+//         component={TabTwoScreen}
+//         options={{ headerTitle: 'Tab Two Title' }}
+//       />
+//     </TabTwoStack.Navigator>
+//   );
+// }
 
 const HomeStack = createStackNavigator();
 
@@ -109,7 +109,7 @@ function HomeNavigator() {
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+        options={{ headerShown: false }}
       />
     </HomeStack.Navigator>
   );
@@ -151,7 +151,19 @@ function MainRequestNavigator() {
       <MainRequestStack.Screen
         name="MainRequestScreen"
         component={MainRequestScreen}
-        options={{ headerTitle: 'All Requests' }}
+        options={{ 
+          headerTitle: 'Request List',
+          headerTintColor: "white",
+          headerStatusBarHeight: 30,
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: "red",
+            borderBottomLeftRadius: 60,
+            borderBottomRightRadius: 50,
+            borderColor: "red",
+            height: 90,
+
+        } }}
       />
     </MainRequestStack.Navigator>
   );

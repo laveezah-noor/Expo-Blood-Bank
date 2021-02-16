@@ -1,15 +1,17 @@
 const INITIAL_STATE = {
     current_user:
         {
-            name: "Allan Sohail",
+            name: "",
             dp: "assets\images\icon.png",
-            gender: 'Female',
-            bloodGroup: "AB+",
-            dob: "01-01-01",
-            email: "allan@gmail.com",
-            no: "0321654987",
-            height: '150',
-            weight: '50'
+            gender: '',
+            bloodGroup: "",
+            dob: "",
+            donor: false,
+            email: "",
+            no: "",
+            height: '',
+            weight: '',
+            pass: ""
         }
 }
 
@@ -19,7 +21,15 @@ export default (state = INITIAL_STATE, action) => {
         case "SETPROFILE":
             return ({
                 ...state,
-                current_user: action.payload
+                current_user: {
+                    name: action.payload.name,
+                    email: action.payload.email,
+                    no: action.payload.phone,
+                    donor: action.payload.donor,
+                    bloodGroup: action.payload.bGroup,
+                    pass: action.payload.password
+                    
+                }
             })
     }
     return state;
